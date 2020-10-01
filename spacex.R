@@ -22,15 +22,12 @@ tweets <- searchTwitter("#spacex", n=5000, lang="en")
 # strip out retweets
 tweets <- strip_retweets(tweets, strip_manual = TRUE, strip_mt = TRUE)
 
-# confirm more than 800 records
-length(tweets)
-
 #######################################################################################################################################
 
 # add tweet text to a vector
 tweets.text <- sapply(tweets, function(x) x$getText())
 
-# remove problematic text@Q
+# remove problematic text
 tweets.text <- sapply(tweets.text, function(row) iconv(row, "latin1", "ASCII", sub=""))
 
 # place tweets in corpus
@@ -57,7 +54,7 @@ myCorpus <- tm_map(myCorpus, stemDocument)
 # generate term document matrix
 tdm <- TermDocumentMatrix(myCorpus, control = list(wordLengths = c(1, Inf)))
 
-# find the terms that are mentioned at least 25 times
+# find the terms that are mentioned at least 50 times
 freq.terms <- findFreqTerms(tdm, lowfreq = 50)
 term.freq <- rowSums(as.matrix(tdm))
 term.freq <- subset(term.freq, term.freq >= 50)
@@ -81,6 +78,7 @@ dist_mat <- dist(scale(mat))
 fit <- hclust(dist_mat, method = "ward.D")
 
 # plot the dendrogram and cut the tree into 6 clusters
+# rename plot based on hashtag searched.
 plot(fit, main="#spacex Cluster Dendrogram", xlab="Clusters")
 rect.hclust(fit, k=5)
 
@@ -101,6 +99,7 @@ emo_sum
 emo_sum$emotion <- factor(emo_sum$emotion, levels=emo_sum$emotion[order(emo_sum$count, decreasing = TRUE)])
 
 # Visualize the emotions from NRC sentiments
+# rename plot based on hashtag searched.
 plot_ly(emo_sum, x=~emotion, y=~count, type="bar", color=~emotion) %>%
   layout(xaxis=list(title=""), showlegend=FALSE,
          title="Emotion Type for hashtag: #spacex")
