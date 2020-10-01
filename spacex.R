@@ -7,10 +7,10 @@ library("twitteR")
 library("wordcloud")
 
 # store twitter api keys/tokens
-consumer_key <- 'oLq7CtjpyRXoRpCA0yCBElUHl'
-consumer_secret <- 'p9xL67GgsDe69vWtq24I76QTnkx5aVEqwmQeLON7X3pknAubLk'
-access_token <- '3253219856-fe3DPLtc8QzW3k8L52iuzyA5dq9EeW1Ewe8FqJe'
-access_secret <- 'Lwou90NHJ8b3SXno82sXzGMW3KiOrENCFgCdmWPmBjjCw'
+consumer_key <- ''
+consumer_secret <- ''
+access_token <- ''
+access_secret <- ''
 
 # connect to Twitter's API using API tokens
 setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
